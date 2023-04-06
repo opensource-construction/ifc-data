@@ -50,7 +50,7 @@ def get_attribute_value(object_data, attribute):
                 return object_data["PropertySets"][pset_name][prop_name] 
             else:
                 return None
-            if pset_name in object_data["QuantitySets"].keys():
+        if pset_name in object_data["QuantitySets"].keys():
                 if prop_name in object_data["QuantitySets"][pset_name].keys():
                     return object_data["QuantitySets"][pset_name][prop_name]
                 else:
