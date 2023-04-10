@@ -33,7 +33,7 @@ This Python script provides a command-line tool to perform various transformatio
 
 Update column names in a CSV file using a mapping file.
 
-run: `python ifc_transform.py map <mapping_file> <input_file> <output_file>`
+run: `python transformer.py map <mapping_file> <input_file> <output_file>`
 
 - `mapping_file`: Path to the mapping CSV file
 - `input_file`: Path to the input CSV file
@@ -45,7 +45,7 @@ The mapping file should be a CSV file with two columns. The first column contain
 
 Copy values from one column to another in a CSV file.
 
-python ifc_transform.py copy <csv_file> <source_column> <target_column>
+python transformer.py copy <csv_file> <source_column> <target_column>
 
 
 - `csv_file`: Path to the input CSV file
@@ -58,7 +58,7 @@ The script creates a new CSV file with the same name as the input file, but with
 
 Perform conditional transformations based on a JSON configuration file.
 
-python ifc_transform.py match <json_file> <csv_file> <output_file>
+python transformer.py match <json_file> <csv_file> <output_file>
 
 
 - `json_file`: Path to the JSON configuration file
