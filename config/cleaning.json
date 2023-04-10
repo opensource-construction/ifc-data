@@ -1,0 +1,11 @@
+{
+    "columns": [
+      "vyzn.source.GUID",    
+      "vyzn.reference.ElementType",
+      "vyzn.source.GUID",
+      "vyzn.GrossArea",
+      "vyzn.source.floor",
+      "vyzn.source.ElementName",
+      "vyzn.NetVolume"
+    ]
+  }

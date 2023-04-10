@@ -1,0 +1,202 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0; /* remove the default margin */
+    position: relative; /* set the body as the positioning context */
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 100px 320px 60px 1fr;
+    width: 100%;
+    height: 100%;
+    gap: 10px;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+
+  .header-logo {
+    align-self: center;  
+  }
+
+  .header-text {
+    text-align: center;
+    align-self: center;
+  }
+
+  .search {
+    grid-row-start: 3;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    display: flex; /* Add this line */
+    align-items: center; /* Add this line */
+    justify-content: center; /* Add this line */
+  }
+
+  #searchInput {
+    width: 500px;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #dfe1e5; 
+    border-radius: 24px; 
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    transition: box-shadow 0.3s, border-color 0.3s; 
+  }
+  
+  #searchInput:focus {
+    border-color: #3e95cd; /* Change border color when the search bar is focused */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); /* Add a darker box shadow when the search bar is focused */
+  }
+  
+  #searchInput::placeholder {
+    color: #999; /* Change the color of the placeholder text */
+  }
+
+  .chart-1 {
+    grid-row-start: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    border: 1px solid #feee94;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    overflow-y: auto;
+  }
+
+  .chart-2 {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    border: 1px solid #feee94;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    overflow-y: auto;
+  }
+
+  .chart-3 {
+    grid-row-start: 2;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    border: 1px solid #feee94;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    overflow-y: auto;
+  }
+
+
+  .detail-section {
+    grid-row-start: 4;
+    grid-row-end: 6;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    overflow-y: auto;
+    max-height: 800px;
+    border: 1px solid #feee94;
+    padding: 50px;
+    border-radius: 10px;
+  }
+
+  .footer {
+    background: yellow;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    z-index: 1;
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+  }
+
+
+
+   /* Chart table styles */
+  .ElementTable {
+    width: 100%;
+    max-width: 800px;
+    margin: 1rem auto;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Header row styles */
+  .ElementTable th {
+    text-align: left;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    border-bottom: 2px solid #ccc;
+    width: 50px;
+  }
+
+  /* Table row styles */
+  .ElementTable tr {
+    border-bottom: 1px solid #ccc;
+  }
+
+  /* Table data cell styles */
+  .ElementTable td {
+    padding: 0.5rem 1rem;
+  }
+
+  /* Table row hover effect */
+  .ElementTable tr:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .idsContent {
+    display: flex;
+  }
+  .idsTable {
+    margin-right: 20px;
+  }
+
+
+  #chat-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#conversation {
+    height: 300px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#message-form {
+    display: flex;
+    align-items: center;
+}
+
+#message-input {
+    flex-grow: 1;
+    margin-right: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

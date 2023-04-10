@@ -1,0 +1,14 @@
+{
+    "conditions": [
+      {
+        "column": "vyzn.reference.ElementType",
+        "value": "IfcWall",
+        "action": {
+          "type": "copy",
+          "source_column": "vyzn.GrossSideArea",
+          "target_column": "vyzn.GrossArea"
+        }
+      }
+    ]
+  }
+  

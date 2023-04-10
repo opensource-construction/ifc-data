@@ -20,7 +20,7 @@ def get_objects_data_by_class(file, class_type):
 
     pset_attributes = set()
     objects_data = []
-    objects = file.by_type(class_type)
+    objects = file.by_type(class_type)  
 
     for object in objects:
         psets = Element.get_psets(object, psets_only=True)
@@ -46,7 +46,7 @@ def get_objects_data_by_class(file, class_type):
             "PropertySets": psets,
             "Coord1": coordinates[0],
             "Coord2": coordinates[1],
-            "Coord3": coordinates[2]
+            "Coord3": coordinates[2],
         })
     return objects_data, list(pset_attributes)
 
