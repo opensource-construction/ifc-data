@@ -2,7 +2,7 @@
 
 This is an experimental collection of tools to work with IFC-data. 
 
-It contains an IFC_TO_CSV script (src/ifc_extractor.py) that extracts all IFC properties (PropertySets and QuantitySets) for all BuildingElements and outputs it to CSV, XLS and JSON (work-in-progress). It provides some basic data transformation and cleansing (src/ifc_transformer.py) and it also shows the results on a webpage (inde.html).
+It contains an IFC_TO_CSV script (src/ifc_extractor.py) that extracts all IFC properties (PropertySets and QuantitySets) for all BuildingElements and outputs it to CSV, XLS and JSON. It provides some basic data transformation and cleansing (src/ifc_transformer.py) and it also shows the results on a webpage (index.html?project-name=).
 
 The ifc_extractor uses Ifcopenshell - many thanks to those lovely people.
 
