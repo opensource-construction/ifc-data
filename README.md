@@ -124,7 +124,7 @@ This is still in development and does probably not work well with other IFC mode
 
 
 # Chat
-## IFC Building Chat 
+## IFC Building Chat :robot:
 
 There is a basic script to summarize content from the CSV that has been extracted. It creates a JSON with summary data for ElementTypes (ElementName content and GrossArea).
 
