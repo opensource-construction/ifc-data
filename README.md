@@ -80,7 +80,7 @@ The JSON configuration file should contain an array of condition objects with th
       }
     }
   ]
-}```
+}`
 
 Each condition object specifies a column and a value to match, as well as an action to perform when the condition is met. In this example, the action type is "copy", which means we want to copy the value from one column to another. The "source_column" and "target_column" properties within the "action" object define the source and target columns for the copy operation.
 
