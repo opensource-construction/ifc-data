@@ -33,7 +33,7 @@ This Python script provides a command-line tool to perform various transformatio
 
 Update column names in a CSV file using a mapping file.
 
-run: `python transformer.py map <mapping_file> <input_file> <output_file>`
+run: `python transformer.py map <mapping_file.csv> <input_file.csv> <output_file.csv>`
 
 - `mapping_file`: Path to the mapping CSV file
 - `input_file`: Path to the input CSV file
@@ -41,12 +41,18 @@ run: `python transformer.py map <mapping_file> <input_file> <output_file>`
 
 The mapping file should be a CSV file with two columns. The first column contains the original column names, and the second column contains the new column names.
 
+```csv
+SourceColumn1,TargetColum1
+SourceColumn2,TargetColum2
+SourceColumn3,TargetColum3
+```
+
+
 ### copy
 
 Copy values from one column to another in a CSV file.
 
-python transformer.py copy <csv_file> <source_column> <target_column>
-
+python transformer.py copy <input_file.csv> <source_column> <target_column>
 
 - `csv_file`: Path to the input CSV file
 - `source_column`: Name of the source column
@@ -54,12 +60,12 @@ python transformer.py copy <csv_file> <source_column> <target_column>
 
 The script creates a new CSV file with the same name as the input file, but with a "_clean" suffix.
 
+
 ### match
 
 Perform conditional transformations based on a JSON configuration file.
 
 python transformer.py match <json_file> <csv_file> <output_file>
-
 
 - `json_file`: Path to the JSON configuration file
 - `csv_file`: Path to the input CSV file
@@ -84,13 +90,38 @@ The JSON configuration file should contain an array of condition objects with th
 ```
 
 
+### Clean
+
+Delete every column except the ones specified in the config-file.
+
+`python transformer.py match <config_file.json> <input_file.csv> <output_file.csv>`
+
 Each condition object specifies a column and a value to match, as well as an action to perform when the condition is met. In this example, the action type is "copy", which means we want to copy the value from one column to another. The "source_column" and "target_column" properties within the "action" object define the source and target columns for the copy operation.
 
+The JSON configuration file should look like this:
+
+```{
+    "columns": [
+      "vyzn.source.GUID",    
+      "vyzn.reference.ElementType",
+      "vyzn.source.GUID",
+      "vyzn.GrossArea",
+      "vyzn.source.floor",
+      "vyzn.source.ElementName",
+      "vyzn.NetVolume"
+    ]
+  }
+```
+  
+  
 # Dashboard
 ## IFC Data Website
 
 There is a basic dashboard that shows a summary of the data for ElementTypes and ElementNames and has dynamic search. 
 This is still in development and does probably not work well with other IFC models.
+
+`https:127.0.0.1/index.html?project-name=<projet-name>`
+
 
 # Chat
 ## IFC Building Chat 
