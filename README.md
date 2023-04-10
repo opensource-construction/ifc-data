@@ -11,8 +11,8 @@ The ifc_extractor uses Ifcopenshell - many thanks to those lovely people.
 
 Put your ifc-file in the data folder and run this command. The script will create a folder with the IFC-file-name.
 
-run: 'python src/extractor.py <input_ifc_file> <output_folder>'
-example: 'python src/extractor.py data/Astra.ifc data'
+run: `python src/extractor.py <input_ifc_file> <output_folder>`
+example: `python src/extractor.py data/Astra.ifc data`
 
 ## transformer
 
@@ -32,7 +32,7 @@ This Python script provides a command-line tool to perform various transformatio
 
 Update column names in a CSV file using a mapping file.
 
-python ifc_transform.py map <mapping_file> <input_file> <output_file>
+run: `python ifc_transform.py map <mapping_file> <input_file> <output_file>`
 
 - `mapping_file`: Path to the mapping CSV file
 - `input_file`: Path to the input CSV file
