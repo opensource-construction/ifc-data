@@ -80,7 +80,9 @@ The JSON configuration file should contain an array of condition objects with th
       }
     }
   ]
-}`
+}
+```
+
 
 Each condition object specifies a column and a value to match, as well as an action to perform when the condition is met. In this example, the action type is "copy", which means we want to copy the value from one column to another. The "source_column" and "target_column" properties within the "action" object define the source and target columns for the copy operation.
 
@@ -95,9 +97,11 @@ This is still in development and does probably not work well with other IFC mode
 
 There is a basic script to summarize content from the CSV that has been extracted. It creates a JSON with summary data for ElementTypes (ElementName content and GrossArea).
 
-python src/summarizer.py <input_file.csv> <output_type> <output_file.json>
+`python src/summarizer.py <input_file.csv> <output_type> <output_file.json>`
 
 That file can be uploaded on the chat.html page and then you can ask ChatGPT a question about the building. 
 
-Flask: requires that you run the Flask server and provide your OPENAI_API_KEY in your .ENV: python src/chat.py will start the Flask server on 127.0.0.1:5001
+Flask: requires that you run the Flask server and provide your OPENAI_API_KEY in your .ENV: 
+
+`python src/chat.py` will start the Flask server on 127.0.0.1:5001
 
