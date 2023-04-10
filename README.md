@@ -11,8 +11,8 @@ The ifc_extractor uses Ifcopenshell - many thanks to those lovely people.
 
 Put your ifc-file in the data folder and run this command. The script will create a folder with the IFC-file-name.
 
-run: python src/extractor.py <input_ifc_file> <output_folder>
-example: python src/extractor.py data/Astra.ifc data
+run: 'python src/extractor.py <input_ifc_file> <output_folder>'
+example: 'python src/extractor.py data/Astra.ifc data'
 
 ## transformer
 
