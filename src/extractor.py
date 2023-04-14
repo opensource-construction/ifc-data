@@ -163,7 +163,28 @@ def main(input_file, output_folder, output_format):
         # Remove duplicate rows from the DataFrame
         prop_data_dataframe = prop_data_dataframe.drop(columns=["BuildingElement"])
         prop_data_dataframe = prop_data_dataframe.drop_duplicates()
+
+        # Add two sum-columns for the sum of elements with the property and sum of empty properties
+        prop_data_dataframe["ElementsWithProperty"] = 0
+        prop_data_dataframe["EmptyProperties"] = 0
         
+        # Calculate the values for the sum-columns
+        for index, row in prop_data_dataframe.iterrows():
+            type_of_property_set, property_set, property = row["TypeofPropertySet"], row["Property Set"], row["Property"]
+            elements_with_property = 0
+            empty_properties = 0
+
+            for object_data in data:
+                psets = object_data["PropertySets"] if type_of_property_set == "PropertySet" else object_data["QuantitySets"]
+                if property_set in psets and property in psets[property_set]:
+                    elements_with_property += 1
+                    if psets[property_set][property] is None:
+                        empty_properties += 1
+
+            prop_data_dataframe.at[index, "ElementsWithProperty"] = elements_with_property
+            prop_data_dataframe.at[index, "EmptyProperties"] = empty_properties
+
+
         prop_data_csv_file = os.path.join(output_path, f"{file_name}_property_data.csv")
         prop_data_dataframe.to_csv(prop_data_csv_file, index=False)
         print(" Property data CSV executed successfully")
