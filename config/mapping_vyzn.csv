@@ -1,19 +1,22 @@
 ElementType,vyzn.reference.ElementType
 Class,vyzn.reference.ElementType
-GlobalId,vyzn.source.GUID
-GlobalID,vyzn.source.GUID
-ArchiCADQuantities.Fläche,vyzn.GrossArea
-BaseQuantities.Area,vyzn.GrossArea
+GlobalId,vyzn.reference.GUID
+GlobalID,vyzn.reference.GUID
+ArchiCADQuantities.Fläche,vyzn.reference.GrossArea
+BaseQuantities.GrossArea,vyzn.reference.GrossArea
 BaseQuantities.Width,vyzn.Width
 BaseQuantities.Volume,vyzn.Volume
 BaseQuantities.GrossVolume,vyzn.GrossVolume
 BaseQuantities.NetVolume,vyzn.NetVolume
 BaseQuantities.Length,vyzn.Length
 BaseQuantities.Height,vyzn.Height
-BaseQuantities.GrossSideArea,vyzn.GrossSideArea
-BaseQuantities.NetSideArea,vyzn.NetSideArea
+BaseQuantities.GrossSideArea,vyzn.reference.GrossSideArea
+BaseQuantities.NetSideArea,vyzn.reference.NetSideArea
 ArchiCADProperties.Element ID,vyzn.source.ElementName
+Type,vyzn.source.ElementName
+Name,vyzn.reference.ElementID
 ObjectType,vyzn.source.ElementName
 TIMBER_OS.Bauteiltyp,vyzn.source.ElementName
 Level,vyzn.source.floor
 TIMBER_OS.Gebäude Name,vyzn.Building
+Name, vyzn.source.GUID

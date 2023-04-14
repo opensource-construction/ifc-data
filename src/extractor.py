@@ -8,6 +8,7 @@ import pandas as pd
 import json
 import numpy as np
 import argparse
+from tqdm import tqdm
 
 pp = pprint.PrettyPrinter()
 
@@ -27,6 +28,7 @@ def get_objects_data_by_class(file, class_type):
 
     pset_attributes = set()
     objects_data = []
+    prop_data = []
     objects = file.by_type(class_type)  
 
     for object in objects:
@@ -57,7 +59,15 @@ def get_objects_data_by_class(file, class_type):
             "Vector1": coordinates[2],
             "Orientation": orientation  # Include orientation in the object data
         })
-    return objects_data, list(pset_attributes)
+
+        # get data for structure export
+        for pset_type, pset_dict in [("PropertySet", psets), ("QuantitySet", qtos)]:
+                    for pset_name, pset_data in pset_dict.items():
+                        for prop_name in pset_data.keys():
+                            prop_data.append((object.GlobalId, pset_type, pset_name, prop_name))
+
+
+    return objects_data, prop_data, list(pset_attributes)
 
 def get_attribute_value(object_data, attribute):
     if "." not in attribute:
@@ -120,51 +130,70 @@ def write_json_files(data, output_path):
     with open(os.path.join(output_path, "file_list.json"), "w") as outfile:
         json.dump(file_list, outfile, ensure_ascii=False, indent=4)
 
-
-
-
 def main(input_file, output_folder, output_format):
-    file = ifcopenshell.open(input_file)
-    file_name = os.path.splitext(os.path.basename(input_file))[0]
+    # Add progress bar (total=4 stages)
+    with tqdm(total=4, desc="Progress", bar_format="{desc}: {percentage:.1f}%") as pbar:
 
-    output_path = os.path.join(output_folder, file_name)
-    os.makedirs(output_path, exist_ok=True)
+        file = ifcopenshell.open(input_file)
+        file_name = os.path.splitext(os.path.basename(input_file))[0]
 
-    data, pset_attributes = get_objects_data_by_class(file, "IfcBuildingElement")
+        output_path = os.path.join(output_folder, file_name)
+        os.makedirs(output_path, exist_ok=True)
 
-    attributes = ["ExpressID", "GlobalID", "Class", "PredefinedType", "Name", "Level", "ObjectType", "Coord1", "Coord2", "Vector1", "Orientation"] + pset_attributes
+        data, prop_data, pset_attributes = get_objects_data_by_class(file, "IfcBuildingElement")
+        pbar.update(1)  # Update progress bar
 
-    pandas_data = []
-    for object_data in data:
-        row = []
-        for attribute in attributes:
-            value = get_attribute_value(object_data, attribute)
-            row.append(value)
-        pandas_data.append(tuple(row))
+        attributes = ["ExpressID", "GlobalID", "Class", "PredefinedType", "Name", "Level", "ObjectType", "Coord1", "Coord2", "Vector1", "Orientation"] + pset_attributes
 
-    dataframe = pd.DataFrame.from_records(pandas_data, columns=attributes)
+        pandas_data = []
+        for object_data in data:
+            row = []
+            for attribute in attributes:
+                value = get_attribute_value(object_data, attribute)
+                row.append(value)
+            pandas_data.append(tuple(row))
 
-    # Export to CSV
-    if output_format == 'csv':
-        csv_file = os.path.join(output_path, f"{file_name}.csv")
-        dataframe.to_csv(csv_file)
-        print("CSV executed successfully")
+        dataframe = pd.DataFrame.from_records(pandas_data, columns=attributes)
+        pbar.update(1)  # Update progress bar
 
-    # Export to Excel
-    elif output_format == 'xls':
-        excel_file = os.path.join(output_path, f"{file_name}.xlsx")
-        writer = pd.ExcelWriter(excel_file, engine='xlsxwriter')
-        for object_class in dataframe["Class"].unique():
-            df_class = dataframe[dataframe["Class"] == object_class]
-            df_class = df_class.dropna(axis=1, how='all')
-            df_class.to_excel(writer, sheet_name=object_class, index=False)
-        writer.save()
-        print("Excel executed successfully")
+        # Export Property Sets and Quantity Sets to CSV
+        prop_data_columns = ["BuildingElement", "TypeofPropertySet", "Property Set", "Property"]
+        prop_data_dataframe = pd.DataFrame(prop_data, columns=prop_data_columns)
 
-    # Export to JSON
-    elif output_format == 'json':
-        write_json_files(data, output_path)
-        print("JSON executed successfully")
+        # Remove duplicate rows from the DataFrame
+        prop_data_dataframe = prop_data_dataframe.drop(columns=["BuildingElement"])
+        prop_data_dataframe = prop_data_dataframe.drop_duplicates()
+        
+        prop_data_csv_file = os.path.join(output_path, f"{file_name}_property_data.csv")
+        prop_data_dataframe.to_csv(prop_data_csv_file, index=False)
+        print(" Property data CSV executed successfully")
+        pbar.update(1)  # Update progress bar
+
+        # Export to CSV
+        if output_format == 'csv':
+            csv_file = os.path.join(output_path, f"{file_name}.csv")
+            dataframe.to_csv(csv_file)
+            print(" CSV executed successfully")
+            pbar.update(2) # Update progress bar
+
+        # Export to Excel
+        elif output_format == 'xls':
+            excel_file = os.path.join(output_path, f"{file_name}.xlsx")
+            writer = pd.ExcelWriter(excel_file, engine='xlsxwriter')
+            for object_class in dataframe["Class"].unique():
+                df_class = dataframe[dataframe["Class"] == object_class]
+                df_class = df_class.dropna(axis=1, how='all')
+                df_class.to_excel(writer, sheet_name=object_class, index=False)
+            writer.save()
+            print(" Excel executed successfully")
+            pbar.update(2) # Update progress bar
+
+        # Export to JSON
+        elif output_format == 'json':
+            write_json_files(data, output_path)
+            print(" JSON executed successfully")
+            pbar.update(2) # Update progress bar
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Extract element data from an IFC file")
