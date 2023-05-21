@@ -21,7 +21,7 @@ total_row_count = len(df)
 match_count = 0
 
 # Apply each condition/action pair from the JSON file
-for index, row in df.iterrows():  # Use iterrows() here
+for index, row in df.iterrows():
     for condition_group in config['condition_groups']:
         matched_all_conditions = True
         for condition in condition_group['conditions']:
@@ -34,15 +34,18 @@ for index, row in df.iterrows():  # Use iterrows() here
                     matched_all_conditions = False
                     break
             elif operator == 'contains':
-                if not any(value in str(row[column]) for value in values):  # Convert row[column] to string here
+                if not any(value in str(row[column]) for value in values):
                     matched_all_conditions = False
                     break
 
         if matched_all_conditions:
-            match_count += 1  # Increase match_count here
-            action = condition_group['action']
-            if action['type'] == 'set':
-                df.at[index, action['target_column']] = action['value']  # Update df directly here
+            match_count += 1
+            if 'actions' in condition_group:  # Check if 'actions' key exists
+                for action in condition_group['actions']:
+                    if action['type'] == 'set':
+                        df.at[index, action['target_column']] = action['value']
+                    elif action['type'] == 'copy':
+                        df.at[index, action['target_column']] = row[action['source_column']]
 
 # Save the updated DataFrame to a new CSV file
 df.to_csv(args.output_file, index=False)
