@@ -140,7 +140,18 @@ def main(input_file, output_folder, output_format):
         output_path = os.path.join(output_folder, file_name)
         os.makedirs(output_path, exist_ok=True)
 
+        # Extract IfcBuildingElement data
         data, prop_data, pset_attributes = get_objects_data_by_class(file, "IfcBuildingElement")
+        pbar.update(1)  # Update progress bar
+
+        # Extract IfcSpace data
+        space_data, space_prop_data, space_pset_attributes = get_objects_data_by_class(file, "IfcSpace")
+        pbar.update(1)  # Update progress bar
+
+        # Merge data and property sets
+        data.extend(space_data)
+        prop_data.extend(space_prop_data)
+        pset_attributes = list(set(pset_attributes + space_pset_attributes))
         pbar.update(1)  # Update progress bar
 
         attributes = ["ExpressID", "GlobalID", "Class", "PredefinedType", "Name", "Level", "ObjectType", "Coord1", "Coord2", "Vector1", "Orientation"] + pset_attributes
